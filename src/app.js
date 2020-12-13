@@ -6,14 +6,29 @@ const json = require('koa-json')
 const onerror = require('koa-onerror')
 const bodyparser = require('koa-bodyparser')
 const logger = require('koa-logger')
+const session = require('koa-generic-session')
+const redisStore = require('koa-redis')
+const koaStatic = require('koa-static')
 
+const { REDIS_CONF } = require('./config/db')
+const { isProd } = require('./utils/env')
+const { SESSION_SECRET_KEY } = require('./config/secretKeys')
+
+// 路由
 const index = require('./routes/index')
 const userViewRouter = require('./routes/view/user')
 const userAPIRouter = require('./routes/api/user')
 const errorViewRouter = require('./routes/view/error')
 
 // error handler
-onerror(app)
+let onerrorConfig = {}
+if (isProd) {
+  onerrorConfig = {
+    redirect: '/error'
+  }
+}
+onerror(app, onerrorConfig)
+
 
 // middlewares
 app.use(bodyparser({
@@ -25,6 +40,22 @@ app.use(require('koa-static')(__dirname + '/public'))
 
 app.use(views(__dirname + '/views', {
   extension: 'ejs'
+}))
+
+
+// session 配置
+app.keys = [SESSION_SECRET_KEY]
+app.use(session({
+  key: 'weibo.sid', // cookie name 默认是 `koa.sid`
+  prefix: 'weibo:sess', // redis key 的前缀，默认是 `koa:sess:`
+  cookie: {
+    path: '/',
+    httpOnly: true,
+    maxAge: 24 * 60 * 60 * 1000  // 单位 ms
+  },
+  store: redisStore({
+    all: `${REDIS_CONF.host}:${REDIS_CONF.port}`
+  })
 }))
 
 // logger
