@@ -42,6 +42,7 @@ app.use(views(__dirname + '/views', {
   extension: 'ejs'
 }))
 
+// debugger
 
 // session 配置
 app.keys = [SESSION_SECRET_KEY]
@@ -53,6 +54,7 @@ app.use(session({
     httpOnly: true,
     maxAge: 24 * 60 * 60 * 1000  // 单位 ms
   },
+  ttl: 24 * 60 * 60 * 1000,
   store: redisStore({
     all: `${REDIS_CONF.host}:${REDIS_CONF.port}`
   })
