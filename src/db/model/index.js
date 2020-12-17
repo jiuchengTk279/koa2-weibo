@@ -4,13 +4,24 @@
 
 const User = require('./User')
 const Blog = require('./Blog')
+const UserRelation = require('./UserRelation')
 
 // 添加外键
 Blog.belongsTo(User, {
   foreignKey: 'userId'
 })
 
+UserRelation.belongsTo(User, {
+  foreignKey: 'followerId'
+})
+
+// 一对多
+User.hasMany(UserRelation, {
+  foreignKey: 'userId'
+})
+
 module.exports = {
   User,
-  Blog
+  Blog,
+  UserRelation
 }
