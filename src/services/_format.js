@@ -2,7 +2,7 @@
  * 数据格式化
  */
 
-const { DEFAULT_PICTURE } = require('../config/constant')
+const { DEFAULT_PICTURE, REG_FOR_AT_WHO } = require('../config/constant')
 const { timeFormat } = require('../utils/dt')
 
 /**
