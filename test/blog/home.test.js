@@ -27,7 +27,7 @@ test('创建一条微博，应该成功', async () => {
 
 // 加载第一页数据
 test('首页，加载第一页数据', async () => {
-  const res = await server.get(`/api/blog/loadMore/0`).set('cookie', Z_COOKIE) // 设置 cookie
+  const res = await server.get(`/api/blog/loadMore/0`).set('cookie', L_COOKIE) // 设置 cookie
   expect(res.body.errno).toBe(0)
 
   const data = res.body.data
