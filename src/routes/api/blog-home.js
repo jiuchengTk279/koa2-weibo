@@ -9,7 +9,6 @@ const genValidator = require('../../middlewares/validator')
 const blogValidate = require('../../validator/blog')
 const { getHomeBlogList } = require('../../controller/blog-home')
 const { getBlogListStr } = require('../../utils/blog')
-const { ne } = require('sequelize/types/lib/operators')
 
 router.prefix('/api/blog')
 
