@@ -2,7 +2,7 @@
  * 微博 @ 关系
  */
 
-const router = require('koa-router')
+const router = require('koa-router')()
 const { loginCheck } = require('../../middlewares/loginCheck')
 const { getAtMeBlogList } = require('../../controller/blog-at')
 const { getBlogListStr } = require('../../utils/blog')
